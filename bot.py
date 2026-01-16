@@ -3,7 +3,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 
-TOKEN = "7986493103:AAHln-2eY1ZPPzvQYrEz2HI7RgJEmcdXpNY"
+TOKEN = ""
 
 
 async def main() -> None:
