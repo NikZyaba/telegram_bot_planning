@@ -278,7 +278,7 @@ def get_today_sessions(db: Session, user_id: int) -> List[WorkSession]:
         WorkSession.end_time.isnot(None)  # Только завершенные
     ).all()
 
-def get_week_session(db: Session, user_id: int) -> List[WorkSession]:
+def get_week_sessions(db: Session, user_id: int) -> List[WorkSession]:
     """Получить все сессии пользователя за последние 7 дней"""
     week_ago = datetime.utcnow() - timedelta(days=7)
     return db.query(WorkSession).filter(

@@ -3,11 +3,11 @@ from aiogram import Router, types
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 
 from database import (
     get_db, get_user_by_telegram_id, get_active_session,
-    get_active_pause, start_pause, stop_pause, get_session_pauses
+    get_active_pause, start_pause, stop_pause, get_session_pauses, WorkSession
 )
 
 """

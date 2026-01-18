@@ -3,7 +3,9 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+from aiogram.fsm.middleware import FSMContextMiddleware
 from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.fsm.context import FSMContext
 
 from config import config
 from database import init_db
@@ -50,10 +52,7 @@ async def main():
     storage = MemoryStorage()
     dp = Dispatcher(storage=storage)
 
-    # 4. Регистрация middleware (будет позже)
-
-
-    # 5. Регистрация роутеров (handlers)
+    # 4. Регистрация роутеров (handlers)
     # Сначала импортируем их
     try:
         from handlers.start import router as start_router
@@ -69,7 +68,7 @@ async def main():
         logger.warning(f"⚠️ Некоторые handlers не найдены: {e}")
         logger.warning("Создайте базовые handlers для продолжения")
 
-    # 6. Команды бота (отобразятся в интерфейсе Telegram)
+    # 5. Команды бота (отобразятся в интерфейсе Telegram)
     commands = [
         {"command": "start", "description": "Запустить бота"},
         {"command": "help", "description": "Помощь"},
@@ -86,7 +85,7 @@ async def main():
     except Exception as e:
         logger.error(f"❌ Ошибка установки команд: {e}")
 
-    # 7. Уведомление админам о запуске
+    # 6. Уведомление админам о запуске
     if config.bot.admin_ids:
         for admin_id in config.bot.admin_ids:
             try:
@@ -99,7 +98,7 @@ async def main():
             except Exception as e:
                 logger.error(f"❌ Не удалось отправить уведомление админу {admin_id}: {e}")
 
-    # 8. Запуск поллинга (опрос сервера Telegram)
+    # 7. Запуск поллинга (опрос сервера Telegram)
     logger.info("✅ Бот запущен и ожидает сообщений...")
     logger.info("=" * 50)
 
