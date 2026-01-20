@@ -268,7 +268,25 @@ def get_session_pauses(db: Session, session_id: int) -> List[Pause]:
     """Получить все паузы сессии"""
     return db.query(Pause).filter(Pause.session_id == session_id).all()
 
+def get_today_pauses(db: Session, user_id: int) -> List[Pause]:
+    """Получить все паузы пользователя за сегодня"""
+    today = datetime.utcnow().date()
 
+    # Находим все сессии пользователя за сегодня
+    sessions = db.query(WorkSession).filter(
+        WorkSession.user_id == user_id,
+        WorkSession.date >= today
+    ).all()
+
+    # Берем все паузы с сессии
+    all_pauses = list()
+    for session in sessions:
+        session_pauses = get_session_pauses(db=db, session_id=session.id)
+        all_pauses.extend(session_pauses)
+
+    return all_pauses
+
+# ==================== ФУНКЦИИ СЕССИЙ ====================
 def get_today_sessions(db: Session, user_id: int) -> List[WorkSession]:
     """Получить все сессии пользователя за сегодня"""
     today = datetime.utcnow().date()

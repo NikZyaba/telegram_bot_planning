@@ -4,6 +4,7 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from keyboards.main_menu import get_main_menu
 
 from database import (
     get_db, get_user_by_telegram_id, get_active_session,
@@ -72,6 +73,10 @@ async def cmd_start_work(message: types.Message):
             f"• /pause - сделать перерыв\n"
             f"• /stop_work - закончить день"
         )
+        await message.answer(
+            "🔙 Возврат в главное меню:",
+            reply_markup=get_main_menu()
+        )
 
     except Exception as e:
         await message.answer("❌ Произошла ошибка при начале рабочего дня.")
@@ -129,6 +134,10 @@ async def cmd_stop_work(message: types.Message):
             f"⏱️ Общее время: {work_duration}\n"
             f"⏸️ Перерывы: {active_session.total_pause_seconds // 60} мин\n\n"
             f"🏁 Отличная работа! Хорошего отдыха!"
+        )
+        await message.answer(
+            "🔙 Возврат в главное меню:",
+            reply_markup=get_main_menu()
         )
     except Exception as e:
         await message.answer("❌ Произошла ошибка при завершении рабочего дня.")

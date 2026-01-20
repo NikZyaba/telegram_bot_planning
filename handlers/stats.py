@@ -1,5 +1,6 @@
 from aiogram import Router, types
 from aiogram.filters import Command
+from keyboards.main_menu import get_main_menu
 
 from datetime import datetime, timedelta
 from database import (
@@ -86,6 +87,10 @@ async def cmd_today(message: types.Message):
             response_lines.append("\nℹ️ Сегодня еще не было рабочих сессий.")
 
         await message.answer("\n".join(response_lines))
+        await message.answer(
+            "🔙 Возврат в главное меню:",
+            reply_markup=get_main_menu()
+        )
 
     except Exception as e:
         await message.answer("❌ Ошибка при получении статистики.")
@@ -177,6 +182,10 @@ async def cmd_week(message: types.Message):
         ])
 
         await message.answer("\n".join(response_lines))
+        await message.answer(
+            "🔙 Возврат в главное меню:",
+            reply_markup=get_main_menu()
+        )
 
     except Exception as e:
         await message.answer("❌ Ошибка при получении статистики за неделю.")

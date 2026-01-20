@@ -58,10 +58,12 @@ async def main():
         from handlers.start import router as start_router
         from handlers.time_tracking import router as time_router
         from handlers.stats import router as stats_router
+        from handlers.callbacks import router as callbacks_router
 
         dp.include_router(start_router)
         dp.include_router(time_router)
         dp.include_router(stats_router)
+        dp.include_router(callbacks_router)
 
         logger.info("✅ Роутеры зарегистрированы")
     except ImportError as e:
@@ -70,7 +72,8 @@ async def main():
 
     # 5. Команды бота (отобразятся в интерфейсе Telegram)
     commands = [
-        {"command": "start", "description": "Запустить бота"},
+        {"command": "start", "description": "Запустить бота с меню"},
+        {"command": "menu", "description": "Показать меню"},
         {"command": "help", "description": "Помощь"},
         {"command": "start_work", "description": "Начать рабочий день"},
         {"command": "stop_work", "description": "Закончить рабочий день"},
